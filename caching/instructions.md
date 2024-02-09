@@ -157,11 +157,11 @@ We recommend that you develop your own tests, either using the
 ```unittest``` framework or hand-crafted cases. Share them with your
 colleagues. Treat this as a challenge: can you design a test that will
 expose an error in someone else's code? Please note the distinction
-between sharing **tests** and sharing **implementations**. Sharing
-tests is fine and may help you in collectively understanding the
-problem space. Sharing implementations for in individual assessment
-such as this one is considered as collusion and thus academic
-malpractice.
+between sharing **tests** and sharing **implementations**. In this
+context, sharing tests is acceptable and may help you in collectively
+understanding the problem space. Sharing *implementations* for
+individual assessment such as this one is considered as collusion and
+thus academic malpractice.
 
 ## The Task
 
@@ -308,9 +308,9 @@ will be rerun on re-submission.
 You will see that if you simply submit the code skeletons that we have
 provided without making any changes, a number of tests will pass (and
 some will fail). This allows you to check that the submission
-framework is working as expected. Note that tests that are passed by
-the skeleton are all zero-weighted, so submission of the skeleton code
-will result in a mark of 0.
+framework is working as expected. Note that tests other than PEP8
+conformance that are passed by the skeleton are zero-weighted, so
+submission of the skeleton code will result in a very low mark.
 
 There are four strategies to implement: each one contributes roughly
 one quarter of the available marks.
