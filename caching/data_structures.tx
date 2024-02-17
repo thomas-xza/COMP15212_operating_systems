@@ -36,12 +36,7 @@ LRU & MRU
     	{ mem_address: data },	<-  least recently used falls to bottom
 ]
 
-check_if_in_set(
-  set list[dict[int]int], mem_addr int
-  )
-  -> (
-  res bool, pos int
-  )
+check_if_in_set()
 
 //  remove_from_set() is used during cache hits (to rearrange), as well as during misses (to make space)
 
@@ -98,6 +93,13 @@ remove_from_set_hits(
   set_hits list[int]
   )
 
+prepend_to_set()
 
+prepend_to_set_hits(
+  set_hits list[int], pos int
+  )
+  -> (  
+  set_hits list[int]
+  )
 
 -----
