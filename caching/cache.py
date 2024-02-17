@@ -54,10 +54,14 @@ class CyclicCache(Cache):
     # method.
 
     def __init__(self, data, size=5):
-        super().__init__(data)
+        super().__init__(data) 
 
     # Look up an address. Uses caching if appropriate.
+
+    ##  Check through whole queue, looking for 
+    
     def lookup(self, address):
+        
         return None
 
 

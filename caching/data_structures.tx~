@@ -1,0 +1,51 @@
+CYCLIC
+
+[
+    [mem_address, data],
+    [mem_address, data],
+    [mem_address, data],
+    [mem_address, data],
+    [null, 	  null],	<- queue pointer
+]
+
+-----
+
+LRU & MRU
+
+[
+    [mem_address, data],        <-  most recently used at top, via prepends (and deletion if already in cache)
+    [mem_address, data],
+    [mem_address, data],
+    [mem_address, data],
+    [mem_address, data],	<-  least recently used falls to bottom
+]
+
+-----
+
+LFU
+
+[
+    [mem_address, data, access_quantity],
+    [mem_address, data, access_quantity],
+    [mem_address, data, access_quantity],
+    [mem_address, data, access_quantity],
+    [mem_address, data, access_quantity],
+]
+
+get_lowest_access_quantity( cache: list[list[int, int, int]] ): -> mem_address: int
+
+alternatively...?
+
+mem_address[data]
+mem_address[access_quantity]
+
+[
+	{mem_address: int, data: int, access_quantity: int},
+	{mem_address: int, data: int, access_quantity: int},
+	{mem_address: int, data: int, access_quantity: int},
+	{mem_address: int, data: int, access_quantity: int},
+	{mem_address: int, data: int, access_quantity: int},
+]
+
+-----
+

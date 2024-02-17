@@ -28,9 +28,11 @@ class BasicTestCase(unittest.TestCase):
 # Unit tests
 class TestCaseNull(BasicTestCase):
 
-    ##  impl: Implementation of cache; an object of XXXCache
-    ##  location: Memory location to attempt access of
+    ##  Checks that there is data in the cache.
     
+    ##  impl: Implementation of cache; an object of XXXCache.
+    ##  location: Memory location to attempt access at.
+
     # Simple lookup.
     def lookup_check(self, impl, location):
         # Lookup location. Should be non null.
@@ -98,11 +100,11 @@ class TestCaseFlag(BasicTestCase):
 class TestCaseLookup(BasicTestCase):
 
     # Simple lookup comparisons. The results of looking up a location
-    # twice should be the same
+    # twice should be the same.
+    
     def lookup_check(self, impl, location):
         # Lookup location. Should be non null.
         datum_1 = impl.lookup(location)
-        print(f"DATUM_1 {datum_1}")
         self.assertTrue(datum_1)
 
         # Lookup location again. Should still be non null.
@@ -139,6 +141,8 @@ class TestCaseLookup(BasicTestCase):
 
 
 class TestCaseMemoryHit(BasicTestCase):
+
+    ##  Checks that the counter for memory hits changes as expected.
 
     # Lookup the same location twice and check the hit count
     def caching_check(self, impl, diff):
@@ -180,7 +184,10 @@ class TestCaseMemoryHit(BasicTestCase):
 
 class TestCaseCacheHit(BasicTestCase):
 
-    # Lookup the same location twice and check the cache hit count
+    ##  Checks that the cache hit counter changes as expected, after
+    ##  priming the cache via lookups.
+
+    # Lookup the same location twice and check the cache hit count.    
     def caching_check(self, impl, diff):
         # Warm up and fill the cache.
         for loc in range(10, 20):
