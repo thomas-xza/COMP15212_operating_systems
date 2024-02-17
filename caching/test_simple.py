@@ -28,6 +28,9 @@ class BasicTestCase(unittest.TestCase):
 # Unit tests
 class TestCaseNull(BasicTestCase):
 
+    ##  impl: Implementation of cache; an object of XXXCache
+    ##  location: Memory location to attempt access of
+    
     # Simple lookup.
     def lookup_check(self, impl, location):
         # Lookup location. Should be non null.
@@ -99,6 +102,7 @@ class TestCaseLookup(BasicTestCase):
     def lookup_check(self, impl, location):
         # Lookup location. Should be non null.
         datum_1 = impl.lookup(location)
+        print(f"DATUM_1 {datum_1}")
         self.assertTrue(datum_1)
 
         # Lookup location again. Should still be non null.
