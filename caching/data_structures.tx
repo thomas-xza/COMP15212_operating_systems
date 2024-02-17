@@ -5,8 +5,24 @@ CYCLIC
 	{ mem_address: data },
 	{ mem_address: data },
 	{ mem_address: data },
-        [null, 	  null],      		      		<- queue pointer
+        { -1: -1 },		<- queue pointer
 ]
+
+check_if_in_set(
+  set list[dict[int]int], mem_addr int
+  )
+  -> (
+  res bool, pos int
+  )
+
+push_to_queue(
+  queue list[dict[int]int], queue_ptr, mem_addr, data int
+  )
+  -> (
+  queue list[dict[int]int], queue_ptr int
+  )
+
+//  no other functions needed.
 
 -----
 
@@ -20,15 +36,37 @@ LRU & MRU
     	{ mem_address: data },	<-  least recently used falls to bottom
 ]
 
+check_if_in_set(
+  set list[dict[int]int], mem_addr int
+  )
+  -> (
+  res bool, pos int
+  )
+
+//  remove_from_set() is used during cache hits (to rearrange), as well as during misses (to make space)
+
+remove_from_set(
+  set list[dict[int]int], pos int
+  )
+  -> (
+  set list[dict[int]int]
+  )
+
+prepend_to_set(
+  set list[dict[int]int], mem_addr, data int
+  ) -> (
+  set list[dict[int]int]
+  )
+
 -----
 
 LFU
 
-to maintain consistency with other cache types...
+//  to maintain consistency with other cache types...
 
 [
 	{ mem_address: data },
-	{ mem_address: data },
+	{ mem_address: data },   <-  lowest usage
 	{ mem_address: data },
 	{ mem_address: data },
 	{ mem_address: data },
@@ -36,12 +74,30 @@ to maintain consistency with other cache types...
 
 [
 	access_quantity,
-	access_quantity,
+	access_quantity,         <-  lowest int
 	access_quantity,
 	access_quantity,
 	access_quantity,
 ]
+
+check_if_in_set()
+
+find_lowest_access_quantity(
+  set_hits list[int]
+  )
+  -> (
+  pos int
+  )
+  
+remove_from_set()
+
+remove_from_set_hits(
+  set_hits list[int], pos int
+  )
+  -> (  
+  set_hits list[int]
+  )
+
 
 
 -----
-
