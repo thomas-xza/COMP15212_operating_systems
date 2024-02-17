@@ -13,7 +13,7 @@ CYCLIC
 LRU & MRU
 
 [
-	{ mem_address: data },     <-  most recently used at top, via prepends (and deletion if already in cache)
+	{ mem_address: data },  <-  most recently used at top, via prepends (and deletion if already in cache)
     	{ mem_address: data },
     	{ mem_address: data },
     	{ mem_address: data },
@@ -24,13 +24,24 @@ LRU & MRU
 
 LFU
 
+to maintain consistency with other cache types...
+
 [
-	{ mem_address: [ data, access_quantity ] },
-	{ mem_address: [ data, access_quantity ] },
-	{ mem_address: [ data, access_quantity ] },
-	{ mem_address: [ data, access_quantity ] },
-	{ mem_address: [ data, access_quantity ] },
+	{ mem_address: data },
+	{ mem_address: data },
+	{ mem_address: data },
+	{ mem_address: data },
+	{ mem_address: data },
 ]
+
+[
+	access_quantity,
+	access_quantity,
+	access_quantity,
+	access_quantity,
+	access_quantity,
+]
+
 
 -----
 
