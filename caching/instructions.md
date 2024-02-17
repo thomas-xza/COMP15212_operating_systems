@@ -1,5 +1,8 @@
 # Exercise: Caching Simulation
 
+INTRO
+-----
+
 This exercise asks you to explore different approaches to caching, in
 particular alternative mechanisms for identifying which elements
 should be evicted from the cache when the cache is full and a new item
@@ -8,11 +11,6 @@ needs to be stored.
 The exercise involves implementation of a cache that stores the
 results of memory lookups, with the aim of reducing the number of
 lookups that are needed during a sequence of memory accesses.
-
-The exercise is *summative* and contributes towards your unit
-mark. The work should be your own individual work. Do **not** share
-solutions or submit code copied from the web. We will run comparison
-software on submitted code.
 
 A memory lookup takes a location, here modelled as an integer, and
 returns some data, here modelled as a string of hex digits.
