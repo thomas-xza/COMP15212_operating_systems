@@ -1,10 +1,10 @@
 CYCLIC
 
 [
-	{mem_address: [ data, access_quantity ] },
-	{mem_address: [ data, access_quantity ] },
-	{mem_address: [ data, access_quantity ] },
-	{mem_address: [ data, access_quantity ] },
+	{ mem_address: data },
+	{ mem_address: data },
+	{ mem_address: data },
+	{ mem_address: data },
         [null, 	  null],      		      		<- queue pointer
 ]
 
@@ -13,11 +13,11 @@ CYCLIC
 LRU & MRU
 
 [
-	{ mem_address: [ data, access_quantity ] },     <-  most recently used at top, via prepends (and deletion if already in cache)
-    	{ mem_address: [ data, access_quantity ] },
-    	{ mem_address: [ data, access_quantity ] },
-    	{ mem_address: [ data, access_quantity ] },
-    	{ mem_address: [ data, access_quantity ] },	<-  least recently used falls to bottom
+	{ mem_address: data },     <-  most recently used at top, via prepends (and deletion if already in cache)
+    	{ mem_address: data },
+    	{ mem_address: data },
+    	{ mem_address: data },
+    	{ mem_address: data },	<-  least recently used falls to bottom
 ]
 
 -----
