@@ -135,6 +135,10 @@ class Cache():
             next_pos = pos + 1
 
         return ds, next_pos
+
+    ##############################################
+    ##  GENERIC DATA STRUCTURE FUNCTIONS ABOVE  ##
+    ##############################################    
     
 
 class CyclicCache(Cache):
@@ -202,9 +206,66 @@ class LRUCache(Cache):
         super().__init__(data)
         self.cache = super().generate_ds(size)
 
+
+    def update_lru_cache(cache, mem_addr, data):
+
+        ##  Check for empty slot in cache.
+        
+        empty_slot, _ = super().check_if_in_ds(cache, -1)
+
+        res_del = False
+
+        ##  If empty available, delete it and write to cache.
+        
+        if empty_slot == True:
+
+            cache, res_del = super().delete_data_from_ds(cache, -1)
+
+        else:
+
+            cache, res_del = super().delete_data_from_ds(
+                cache,
+                len(self.cache) - 1
+            )
+            
+        if res_del == True:
+
+            cache = super().prepend_to_ds(cache, mem_addr, data)
+
+        return cache
+            
+
     # Look up an address. Uses caching if appropriate.
     def lookup(self, address):
-        return None
+
+        hit, pos_hit = super().check_if_in_ds(self.cache, address)
+
+        if hit == True:
+
+            ##  Set cache hit data.
+            self.cache_hit_count += 1            
+            self.cache_hit_flag = True
+
+            data = self.cache[pos_hit][address]
+
+        else:
+ 
+            ##  Set cache miss data.
+            self.cache_hit_flag = False
+            
+            ##  Access memory.
+            data = super().lookup(address)
+
+            if data is not None:
+
+                ##  Update LRU cache.
+                self.cache = super().write_to_lru_cache(
+                    self.cache,
+                    address,
+                    data
+                )
+                
+        return data
 
 
 class MRUCache(Cache):
