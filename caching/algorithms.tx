@@ -1,0 +1,9 @@
+
+cyclic
+
+  1. check if in cache, set flag
+  2. if not in cache, go to memory, set flag
+    2.a. store to cache
+  
+  3. return data
+  

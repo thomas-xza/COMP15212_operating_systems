@@ -1,20 +1,9 @@
+#!/usr/bin/python3
+
 from memory import Memory
 import utilities
 
 
-# This class does not provide any actual caching and is used as a
-# superclass that is extended for the various strategie. It defines
-# two variables that should keep track of cache hits and accessors for
-# statistics and testing.
-#
-# cache_hit_count: should be incremented whenever the cache is hit,
-# i.e. if the requested element is already in the cache.
-#
-# cache_hit_flag: should be set to True if the cache was hit on the
-# last request and set to False otherwise
-#
-# Definitions of lookup in subclasses should update these variables as
-# appropriate.
 class Cache():
 
     def name(self):
@@ -149,45 +138,12 @@ class CyclicCache(Cache):
 
     def __init__(self, data, size=5):
         super().__init__(data)
-        self.cache = super().generate_ds(size)
-        self.cache_ptr = 0
 
     # Look up an address. Uses caching if appropriate.
 
     def lookup(self, address):
-
-        hit, pos = super().check_if_in_ds(self.cache, address)
-
-        if hit == True:
-
-            ##  Set cache hit data.
-            self.cache_hit_count += 1            
-            self.cache_hit_flag = True
-
-            data = self.cache[pos][address]
-
-        else:
- 
-            ##  Set cache miss data.
-            self.cache_hit_flag = False
-            
-            ##  Access memory.
-            data = super().lookup(address)
-
-            if data is not None:
-
-                ##  Store to cache (if found)
-                
-                self.cache, self.cache_ptr = super().push_to_ds(
-                    self.cache,
-                    self.cache_ptr,
-                    address,
-                    data
-                    )
-
-                
-
-        return data
+        
+        return None
 
 
 class LRUCache(Cache):
@@ -202,7 +158,6 @@ class LRUCache(Cache):
 
     def __init__(self, data, size=5):
         super().__init__(data)
-        self.cache = super().generate_ds(size)
 
     # Look up an address. Uses caching if appropriate.
     def lookup(self, address):
@@ -221,7 +176,6 @@ class MRUCache(Cache):
 
     def __init__(self, data, size=5):
         super().__init__(data)
-        self.cache = super().generate_ds(size)
 
     # Look up an address. Uses caching if appropriate.
     def lookup(self, address):
@@ -245,7 +199,6 @@ class LFUCache(Cache):
 
     def __init__(self, data, size=5):
         super().__init__(data)
-        self.cache = super().generate_ds(size)
 
     # Look up an address. Uses caching if appropriate.
     def lookup(self, address):
