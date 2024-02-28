@@ -124,7 +124,7 @@ class Cache():
         return ds, res
 
     
-    def push_to_ds(self, ds, pos, key, data):
+    def write_to_ds(self, ds, pos, key, data):
 
         ##  Will hard overwrite data in data-struct at position given.
 
@@ -143,7 +143,7 @@ class Cache():
     
     ##############################################
     ##  GENERIC DATA STRUCTURE FUNCTIONS ABOVE  ##
-    ##############################################    
+    ##############################################
 
     
     def update_xru_cache(cache, key, data):
@@ -221,7 +221,7 @@ class CyclicCache(Cache):
 
                 ##  Store to cache (if found).
                 
-                self.cache, self.cache_ptr = super().push_to_ds(
+                self.cache, self.cache_ptr = super().write_to_ds(
                     self.cache,
                     self.cache_ptr,
                     address,
