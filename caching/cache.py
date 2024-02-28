@@ -46,10 +46,11 @@ class Cache():
     ####################################
     ####  DO NOT TOUCH ABOVE LINES  ####
     ####################################
+
     
-    ##############################################
-    ##  GENERIC DATA STRUCTURE FUNCTIONS BELOW  ##
-    ##############################################
+    ########################################################
+    ##  GENERIC DATA STRUCTURE STATELESS FUNCTIONS BELOW  ##
+    ########################################################
 
     
     def generate_ds(self, size):
@@ -141,43 +142,9 @@ class Cache():
         return ds, next_pos
 
     
-    ##############################################
-    ##  GENERIC DATA STRUCTURE FUNCTIONS ABOVE  ##
-    ##############################################
-
-    
-    def update_xru_cache(cache, key, data):
-
-        ##  Multipurpose function for updating LRU and MRU cache.
-        ##  Originally designed for LRU cache, but call .reverse()
-        ##    on a new instance of a variable (due to in-place editing)
-        ##    and call it, to use this function for MRU cache.
-
-        ##  Check for empty slot in cache.        
-        empty_slot, _ = check_if_in_ds(cache, -1)
-
-        res_del = False
-
-        if empty_slot == True:
-            
-            ##  If empty available, delete it, prime new slot.
-            cache, res_del = delete_data_from_ds(cache, -1)
-
-        else:
-
-            ##  If empty not available, delete last slot, prime new slot.
-            cache, res_del = delete_data_from_ds(
-                cache,
-                len(self.cache) - 1
-            )
-            
-        if res_del == True:
-
-            cache = super().prepend_to_ds(cache, mem_addr, data)
-
-        return cache
-            
-
+    ########################################################
+    ##  GENERIC DATA STRUCTURE STATELESS FUNCTIONS ABOVE  ##
+    ########################################################
 
 
 class CyclicCache(Cache):
@@ -245,6 +212,39 @@ class LRUCache(Cache):
         super().__init__(data)
         self.cache = super().generate_ds(size)
 
+    
+    def update_xru_cache(self, cache, mem_addr, data):
+
+        ##  Multipurpose function for updating LRU and MRU cache.
+        ##  Originally designed for LRU cache, but call .reverse()
+        ##    on a new instance of a variable (due to in-place editing)
+        ##    and call it, to use this function for MRU cache.
+        ##  Tried it in superclass, but couldn't reach other functions.
+
+        ##  Check for empty slot in cache.        
+        empty_slot, _ = super().check_if_in_ds(cache, -1)
+
+        res_del = False
+
+        if empty_slot == True:
+            
+            ##  If empty available, delete it, prime new slot.
+            cache, res_del = super().delete_data_from_ds(cache, -1)
+
+        else:
+
+            ##  If empty not available, delete last slot, prime new slot.
+            cache, res_del = super().delete_data_from_ds(
+                cache,
+                len(cache) - 1
+            )
+            
+        if res_del == True:
+
+            cache = super().prepend_to_ds(cache, mem_addr, data)
+
+        return cache
+
 
     # Look up an address. Uses caching if appropriate.
     def lookup(self, address):
@@ -269,13 +269,13 @@ class LRUCache(Cache):
 
             if data is not None:
 
-                ##  Update LRU cache.
-                self.cache = super().update_xru_cache(
+                ##  Update cache.
+                self.cache = self.update_xru_cache(
                     self.cache,
                     address,
                     data
                 )
-                
+
         return data
 
 
