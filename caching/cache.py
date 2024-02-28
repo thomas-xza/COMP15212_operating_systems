@@ -136,6 +136,7 @@ class Cache():
 
         return ds, next_pos
 
+    
     ##############################################
     ##  GENERIC DATA STRUCTURE FUNCTIONS ABOVE  ##
     ##############################################    
@@ -180,7 +181,7 @@ class CyclicCache(Cache):
 
             if data is not None:
 
-                ##  Store to cache (if found)
+                ##  Store to cache (if found).
                 
                 self.cache, self.cache_ptr = super().push_to_ds(
                     self.cache,
@@ -209,20 +210,19 @@ class LRUCache(Cache):
 
     def update_lru_cache(cache, mem_addr, data):
 
-        ##  Check for empty slot in cache.
-        
+        ##  Check for empty slot in cache.        
         empty_slot, _ = super().check_if_in_ds(cache, -1)
 
         res_del = False
 
-        ##  If empty available, delete it and write to cache.
-        
         if empty_slot == True:
-
+            
+            ##  If empty available, delete it and setup new slot.
             cache, res_del = super().delete_data_from_ds(cache, -1)
 
         else:
 
+            ##  If empty not available, delete last slot in cache.
             cache, res_del = super().delete_data_from_ds(
                 cache,
                 len(self.cache) - 1
