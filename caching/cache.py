@@ -63,6 +63,9 @@ class Cache():
     
     def check_if_in_ds(self, ds, key):
 
+        ##  Searches though data-struct looking for given key.
+        ##    Returns bool and position based on outcome.
+
         pos = 0
 
         for ds_dict in ds:
@@ -96,6 +99,8 @@ class Cache():
 
         key_pos = -1
 
+        res = False
+
         for ds_dict in ds:
 
             if key in ds_dict.keys():
@@ -110,7 +115,9 @@ class Cache():
 
             ds.insert(0, { -1: -1 })
 
-        return ds
+            res = True
+
+        return ds, res
 
     
     def push_to_ds(self, ds, key, data):

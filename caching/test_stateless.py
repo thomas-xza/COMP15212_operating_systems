@@ -57,8 +57,33 @@ class Test_stateless_methods(unittest.TestCase):
             )
 
 
+    def test_prepend_to_cache(self):
         
-        
+        c_size = 10
+        blah = Cache(data, c_size)
+        cache = blah.generate_ds(c_size)
+
+        for x in range(20):
+
+            cache, res = blah.delete_data_from_ds(cache, -1)
+
+            if res == True:
+                cache = blah.prepend_to_ds(cache, x, x)
+            
+        self.assertEqual(
+            cache,
+            [ {9: 9},
+              {8: 8},
+              {7: 7},
+              {6: 6},
+              {5: 5},
+              {4: 4},
+              {3: 3},
+              {2: 2},
+              {1: 1},
+              {0: 0} ]
+            )
+
 
 if __name__ == '__main__':
     unittest.main()

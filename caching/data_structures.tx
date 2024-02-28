@@ -23,18 +23,18 @@ CYCLIC
         { -1: -1 },		<- queue pointer
 ]
 
-check_if_in_set(
-  set list[dict[int]int], mem_addr int
+check_if_in_ds(
+  ds list[dict[int]int], mem_addr int
   )
   -> (
   res bool, pos int
   )
 
-push_to_queue(
-  queue list[dict[int]int], queue_ptr, mem_addr, data int
+push_to_ds(
+  ds list[dict[int]int], queue_ptr, mem_addr, data int
   )
   -> (
-  queue list[dict[int]int], queue_ptr int
+  ds list[dict[int]int], queue_ptr int
   )
 
 //  no other functions needed.
@@ -51,21 +51,21 @@ LRU & MRU
     	{ mem_address: data },	<-  least recently used falls to bottom
 ]
 
-check_if_in_set()
+check_if_in_ds()
 
-//  remove_from_set() is used during cache hits (to rearrange), as well as during misses (to make space)
+//  remove_from_ds() is used during cache hits (to rearrange), as well as during misses (to make space)
 
-remove_from_set(
-  set list[dict[int]int], pos int
+remove_from_ds(
+  ds list[dict[int]int], pos int
   )
   -> (
-  set list[dict[int]int]
+  ds list[dict[int]int]
   )
 
-prepend_to_set(
-  set list[dict[int]int], mem_addr, data int
+prepend_to_ds(
+  ds list[dict[int]int], mem_addr, data int
   ) -> (
-  set list[dict[int]int]
+  ds list[dict[int]int]
   )
 
 -----
@@ -90,31 +90,31 @@ LFU
 	access_quantity,
 ]
 
-check_if_in_set()
+check_if_in_ds()
 
 find_lowest_access_quantity(
-  set_hits list[int]
+  ds_hits list[int]
   )
   -> (
   pos int
   )
   
-remove_from_set()
+remove_from_ds()
 
-remove_from_set_hits(
-  set_hits list[int], pos int
+remove_from_ds_hits(
+  ds_hits list[int], pos int
   )
   -> (  
-  set_hits list[int]
+  ds_hits list[int]
   )
 
-prepend_to_set()
+prepend_to_ds()
 
-prepend_to_set_hits(
-  set_hits list[int], pos int
+prepend_to_ds_hits(
+  ds_hits list[int], pos int
   )
   -> (  
-  set_hits list[int]
+  ds_hits list[int]
   )
 
 -----
