@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+
+import unittest
+
+from memory import Memory
+from cache import Cache, CyclicCache, LRUCache, MRUCache, LFUCache
+
+class Test_stateless_methods(unittest.TestCase):
+
+    def test_gen_cache(self):
+
+        c_size = 10
+
+        blah = Cache(c_size)
+
+        print(blah.generate_cache(c_size))
+
+        
+        
+
+if __name__ == '__main__':
+    unittest.main()
+from memory import Memory
+from cache import Cache, CyclicCache, LRUCache, MRUCache, LFUCache
+import utilities
+import unittest
+
+# A collection of basic unit tests for caching. These tests will check
+# some basic aspects of the implementation, but should not be
+# considered comprehensive in any way.
+
+# Stop unittest printing traces out. Uncomment this line if you want
+# to see trace information
+__unittest = True
+
+
+class BasicTestCase(unittest.TestCase):
+
+    def setUp(self):
+        data = utilities.sample_data(size=100)

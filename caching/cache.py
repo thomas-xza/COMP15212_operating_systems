@@ -43,6 +43,53 @@ class Cache():
         return self.memory.lookup(address)
 
 
+    ####################################
+    ####  DO NOT TOUCH ABOVE LINES  ####
+    ####################################
+    
+    
+    def generate_set(self, size):
+
+        new_set = []
+
+        for x in range(size):
+
+            new_set.append(
+                { -1: -1 }
+                )
+
+        return new_set
+
+    
+    def check_if_in_set(self, set, mem_addr):
+
+        pos = 0
+
+        for cache_entry in set:
+
+            if mem_addr in cache_entry.keys():
+
+                return True, pos
+
+            pos += 1
+
+        return False, 0
+
+
+    def push_to_queue(self, set, mem_addr, data):
+
+        pass
+
+    def remove_from_set(self, set, mem_addr):
+
+        pass
+
+    def prepend_to_set(self, set, mem_addr, data):
+
+        pass
+
+    
+
 class CyclicCache(Cache):
     def name(self):
         return "Cyclic"
