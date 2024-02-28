@@ -92,7 +92,7 @@ class Cache():
     def delete_data_from_ds(self, ds, key):
 
         ##  Iterates through data-struct, in search of key.
-        ##  Upon finding key, will delete entry in data-struct
+        ##  Upon finding key, will delete entry in data-struct,
         ##    then prepend an empty entry to top of data-struct.
 
         pos = 0
@@ -120,9 +120,21 @@ class Cache():
         return ds, res
 
     
-    def push_to_ds(self, ds, key, data):
+    def push_to_ds(self, ds, pos, key, data):
 
-        pass
+        ##  Will hard overwrite data in data-struct at position given.
+
+        ds[pos] = { key: data }
+
+        if pos + 1 == len(ds):
+
+            next_pos = 0
+
+        else:
+
+            next_pos = pos + 1
+
+        return ds, next_pos
     
 
 class CyclicCache(Cache):

@@ -20,7 +20,7 @@ CYCLIC
 	{ mem_address: data },
 	{ mem_address: data },
 	{ mem_address: data },
-        { -1: -1 },		<- queue pointer
+        { -1: -1 },		<- ds pointer
 ]
 
 check_if_in_ds(
@@ -31,10 +31,10 @@ check_if_in_ds(
   )
 
 push_to_ds(
-  ds list[dict[int]int], queue_ptr, mem_addr, data int
+  ds list[dict[int]int], ds_ptr, mem_addr, data int
   )
   -> (
-  ds list[dict[int]int], queue_ptr int
+  ds list[dict[int]int], ds_ptr int
   )
 
 //  no other functions needed.

@@ -12,25 +12,25 @@ data = utilities.sample_data(size=100)
 class Test_stateless_methods(unittest.TestCase):
 
     
-    def test_gen_cache(self):
+    def test_gen_ds(self):
         
         c_size = 10
         blah = Cache(data, c_size)
-        new_cache = blah.generate_ds(c_size)
+        new_ds = blah.generate_ds(c_size)
 
         self.assertEqual(
-            new_cache,
-            [{-1: -1}, {-1: -1}, {-1: -1}, {-1: -1}, {-1: -1}, {-1: -1}, {-1: -1}, {-1: -1}, {-1: -1}, {-1: -1}]
+            new_ds,
+            [ {-1: -1}, {-1: -1}, {-1: -1}, {-1: -1}, {-1: -1}, {-1: -1}, {-1: -1}, {-1: -1}, {-1: -1}, {-1: -1} ]
             )
 
         
-    def test_check_if_in_cache_valid(self):
+    def test_check_if_in_ds_valid(self):
         
         c_size = 10
         blah = Cache(data, c_size)
-        cache = blah.generate_ds(c_size)
+        ds = blah.generate_ds(c_size)
 
-        res, pos = blah.check_if_in_ds(cache, -1)
+        res, pos = blah.check_if_in_ds(ds, -1)
 
         self.assertEqual(
             res,
@@ -43,13 +43,13 @@ class Test_stateless_methods(unittest.TestCase):
             )
 
 
-    def test_check_if_in_cache_invalid(self):
+    def test_check_if_in_ds_invalid(self):
         
         c_size = 10
         blah = Cache(data, c_size)
-        cache = blah.generate_ds(c_size)
+        ds = blah.generate_ds(c_size)
 
-        res, _ = blah.check_if_in_ds(cache, 2109483289752)
+        res, _ = blah.check_if_in_ds(ds, 2109483289752)
 
         self.assertEqual(
             res,
@@ -57,21 +57,21 @@ class Test_stateless_methods(unittest.TestCase):
             )
 
 
-    def test_prepend_to_cache(self):
+    def test_prepend_to_ds(self):
         
         c_size = 10
         blah = Cache(data, c_size)
-        cache = blah.generate_ds(c_size)
+        ds = blah.generate_ds(c_size)
 
-        for x in range(20):
+        for x in range(c_size * 2):
 
-            cache, res = blah.delete_data_from_ds(cache, -1)
+            ds, res = blah.delete_data_from_ds(ds, -1)
 
             if res == True:
-                cache = blah.prepend_to_ds(cache, x, x)
+                ds = blah.prepend_to_ds(ds, x, x)
             
         self.assertEqual(
-            cache,
+            ds,
             [ {9: 9},
               {8: 8},
               {7: 7},
@@ -83,6 +83,111 @@ class Test_stateless_methods(unittest.TestCase):
               {1: 1},
               {0: 0} ]
             )
+
+
+    def test_delete_from_ds(self):
+        
+        c_size = 10
+        blah = Cache(data, c_size)
+        ds = blah.generate_ds(c_size)
+
+        for x in range(c_size):
+
+            ds, res = blah.delete_data_from_ds(ds, -1)
+
+            if res == True:
+                ds = blah.prepend_to_ds(ds, x, x)
+
+        ds, _ = blah.delete_data_from_ds(ds, 7)
+        ds, _ = blah.delete_data_from_ds(ds, 5)
+        ds, _ = blah.delete_data_from_ds(ds, 3)
+
+        self.assertEqual(
+            ds,
+            [ {-1: -1},
+              {-1: -1},
+              {-1: -1},
+              {9: 9},
+              {8: 8},
+              {6: 6},
+              {4: 4},
+              {2: 2},
+              {1: 1},
+              {0: 0} ]
+            )
+
+
+    def test_push_to_empty_ds(self):
+        
+        c_size = 10
+        blah = Cache(data, c_size)
+        ds = blah.generate_ds(c_size)
+
+        pos = 0
+
+        for x in range(c_size):
+
+            ds, pos = blah.push_to_ds(ds, pos, x, x)
+
+        self.assertEqual(
+            ds,
+            [
+                {0: 0},
+                {1: 1},
+                {2: 2},
+                {3: 3},
+                {4: 4},
+                {5: 5},
+                {6: 6},
+                {7: 7},
+                {8: 8},
+                {9: 9}
+            ]
+            )
+
+        self.assertEqual(
+            pos, 0
+            )
+
+
+    def test_push_to_full_ds(self):
+        
+        c_size = 10
+        blah = Cache(data, c_size)
+        ds = [
+                {0: 0},
+                {1: 1},
+                {2: 2},
+                {3: 3},
+                {4: 4},
+                {5: 5},
+                {6: 6},
+                {7: 7},
+                {8: 8},
+                {9: 9}
+            ]
+
+        pos = 0
+
+        ds, pos = blah.push_to_ds(ds, pos, 100, 100)
+        ds, pos = blah.push_to_ds(ds, pos, 101, 101)
+        ds, pos = blah.push_to_ds(ds, pos, 102, 102)
+
+        self.assertEqual(
+            ds,
+            [
+                {100: 100},
+                {101: 101},
+                {102: 102},
+                {3: 3},
+                {4: 4},
+                {5: 5},
+                {6: 6},
+                {7: 7},
+                {8: 8},
+                {9: 9}
+            ]
+        )
 
 
 if __name__ == '__main__':
