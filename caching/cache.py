@@ -48,26 +48,26 @@ class Cache():
     ####################################
     
     
-    def generate_set(self, size):
+    def generate_ds(self, size):
 
-        new_set = []
+        new_ds = []
 
         for x in range(size):
 
-            new_set.append(
+            new_ds.append(
                 { -1: -1 }
                 )
 
-        return new_set
+        return new_ds
 
     
-    def check_if_in_set(self, set, mem_addr):
+    def check_if_in_ds(self, ds, key):
 
         pos = 0
 
-        for cache_entry in set:
+        for ds_dict in ds:
 
-            if mem_addr in cache_entry.keys():
+            if key in ds_dict.keys():
 
                 return True, pos
 
@@ -76,18 +76,46 @@ class Cache():
         return False, 0
 
 
-    def push_to_queue(self, set, mem_addr, data):
+    def prepend_to_ds(self, ds, key, data):
+
+        ##  WARNING: will overwrite first entry in data struct.
+        ##    Data-struct must therefore be primed by delete_data_from_ds().
+
+        ds[0] = { key: data }
+
+        return ds
+    
+
+    def delete_data_from_ds(self, ds, key):
+
+        ##  Iterates through data-struct, in search of key.
+        ##  Upon finding key, will delete entry in data-struct
+        ##    then prepend an empty entry to top of data-struct.
+
+        pos = 0
+
+        key_pos = -1
+
+        for ds_dict in ds:
+
+            if key in ds_dict.keys():
+
+                key_pos = pos
+
+            pos += 1
+
+        if key_pos != -1:
+
+            del ds[key_pos]
+
+            ds.insert(0, { -1: -1 })
+
+        return ds
+
+    
+    def push_to_ds(self, ds, key, data):
 
         pass
-
-    def remove_from_set(self, set, mem_addr):
-
-        pass
-
-    def prepend_to_set(self, set, mem_addr, data):
-
-        pass
-
     
 
 class CyclicCache(Cache):
