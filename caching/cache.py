@@ -185,8 +185,6 @@ class CyclicCache(Cache):
                     data
                     )
 
-                
-
         return data
 
 
