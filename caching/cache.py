@@ -472,8 +472,6 @@ class LFUCache(Cache):
 
         cache_hits[hit_pos][mem_addr] += 1
 
-        print(cache_hits)
-
         return cache_hits
 
 
