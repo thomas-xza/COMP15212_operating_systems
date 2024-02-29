@@ -180,7 +180,11 @@ class CyclicCache(Cache):
     def lookup(self, address):
 
         if len(self.cache) == 0:
+            
             data = super().lookup(address)
+            
+            print(data)
+                  
             return data
 
         hit, pos = super().check_if_in_ds(self.cache, address)
@@ -293,7 +297,9 @@ class LRUCache(Cache):
     def lookup(self, address):
 
         if len(self.cache) == 0:
+            
             data = super().lookup(address)
+                  
             return data
 
         hit, hit_pos = super().check_if_in_ds(self.cache, address)
@@ -407,7 +413,10 @@ class MRUCache(Cache):
     def lookup(self, address):
 
         if len(self.cache) == 0:
-            return None
+            
+            data = super().lookup(address)
+                  
+            return data
 
         hit, hit_pos = super().check_if_in_ds(self.cache, address)
 
@@ -499,7 +508,10 @@ class LFUCache(Cache):
     def lookup(self, address):
 
         if len(self.cache) == 0:
-            return None
+            
+            data = super().lookup(address)
+                  
+            return data
 
         hit, hit_pos = super().check_if_in_ds(self.cache, address)
 
