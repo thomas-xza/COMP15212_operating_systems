@@ -42,13 +42,13 @@ class Cache():
     def lookup(self, address):
         return self.memory.lookup(address)
 
-    ####################################
-    ###  DO NOT TOUCH ABOVE LINES  ####
-    ####################################
+    ##############################
+    #  DO NOT TOUCH ABOVE LINES  #
+    ##############################
 
-    ########################################################
-    #  GENERIC DATA STRUCTURE STATELESS FUNCTIONS BELOW  ##
-    ########################################################
+    ######################################################
+    #  GENERIC DATA STRUCTURE STATELESS FUNCTIONS BELOW  #
+    ######################################################
 
     def generate_ds(self, size):
 
@@ -184,7 +184,7 @@ class CyclicCache(Cache):
         if hit is True:
 
             #  Set cache hit data.
-            self.cache_hit_count += 1            
+            self.cache_hit_count += 1
             self.cache_hit_flag = True
 
             data = self.cache[pos][address]
@@ -254,7 +254,7 @@ class LRUCache(Cache):
     def update_xru_cache_miss(self, cache, mem_addr, data, lru_cache):
 
         #  Check for empty slot in cache.
-        
+
         empty_slot, _ = super().check_if_in_ds(cache, -1)
 
         res_del = False
@@ -283,7 +283,7 @@ class LRUCache(Cache):
         return cache
 
     # Look up an address. Uses caching if appropriate.
-    
+
     def lookup(self, address):
 
         print(self.cache)
@@ -396,7 +396,7 @@ class MRUCache(Cache):
         return cache
 
     # Look up an address. Uses caching if appropriate.
-    
+
     def lookup(self, address):
 
         print(self.cache)
@@ -526,4 +526,3 @@ class LFUCache(Cache):
                     self.cache_hits, address, 0)
 
         return data
-
