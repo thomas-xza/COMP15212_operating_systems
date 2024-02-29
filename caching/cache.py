@@ -225,9 +225,10 @@ class LRUCache(Cache):
     # the lookup method.
 
     def __init__(self, data, size=5):
+        print("input provided", data, size)
         super().__init__(data)
         self.cache = super().generate_ds(size)
-        # print("generated cache", data, size, self.cache)
+        print("generated cache", self.cache)
 
     def update_xru_cache_hit(self, cache, mem_addr, hit_pos):
 
