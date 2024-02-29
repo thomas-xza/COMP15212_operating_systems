@@ -297,6 +297,8 @@ class LRUCache(Cache):
     # Look up an address. Uses caching if appropriate.
     def lookup(self, address):
 
+        print(self.cache)
+
         hit, hit_pos = super().check_if_in_ds(self.cache, address)
 
         if hit == True:
@@ -326,6 +328,8 @@ class LRUCache(Cache):
                     data,
                     True
                 )
+
+        print(self.cache)
 
         return data
 
@@ -407,6 +411,8 @@ class MRUCache(Cache):
     # Look up an address. Uses caching if appropriate.
     def lookup(self, address):
 
+        print(self.cache)
+
         hit, hit_pos = super().check_if_in_ds(self.cache, address)
 
         if hit == True:
@@ -436,6 +442,8 @@ class MRUCache(Cache):
                     data,
                     False
                 )
+
+        print(self.cache)
 
         return data
 
