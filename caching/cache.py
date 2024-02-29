@@ -180,7 +180,8 @@ class CyclicCache(Cache):
     def lookup(self, address):
 
         if len(self.cache) == 0:
-            return None
+            data = super().lookup(address)
+            return data
 
         hit, pos = super().check_if_in_ds(self.cache, address)
 
@@ -225,7 +226,7 @@ class LRUCache(Cache):
     # the lookup method.
 
     def __init__(self, data, size=5):
-        print("input provided", data, size)
+        print("input provided:", "size", size, "data", data)
         super().__init__(data)
         self.cache = super().generate_ds(size)
         print("generated cache", self.cache)
@@ -292,7 +293,8 @@ class LRUCache(Cache):
     def lookup(self, address):
 
         if len(self.cache) == 0:
-            return None
+            data = super().lookup(address)
+            return data
 
         hit, hit_pos = super().check_if_in_ds(self.cache, address)
 
