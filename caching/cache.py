@@ -212,14 +212,36 @@ class LRUCache(Cache):
         super().__init__(data)
         self.cache = super().generate_ds(size)
 
-    
-    def update_xru_cache(self, cache, mem_addr, data):
+        
+    def update_xru_cache_hit(self, cache, mem_addr, hit_pos):
 
-        ##  Multipurpose function for updating LRU and MRU cache.
-        ##  Originally designed for LRU cache, but call .reverse()
-        ##    on a new instance of a variable (due to in-place editing)
-        ##    and call it, to use this function for MRU cache.
-        ##  Tried it in superclass, but couldn't reach other functions.
+        data = cache[hit_pos][mem_addr]
+        
+        cache, res_del = super().delete_data_from_ds(cache, mem_addr)
+
+        if res_del == True:
+
+            cache = super().prepend_to_ds(cache, mem_addr, data)
+
+        return cache
+
+
+    def rw_lru_cache(self, cache):
+
+        last_key = list(
+            cache[-1].keys()
+        )[0]
+
+        ##  If empty not available, delete last key, prime new slot.
+        cache, res_del = super().delete_data_from_ds(
+            cache,
+            last_key
+        )
+
+        return cache, res_del
+        
+    
+    def update_xru_cache_miss(self, cache, mem_addr, data, lru_cache):
 
         ##  Check for empty slot in cache.        
         empty_slot, _ = super().check_if_in_ds(cache, -1)
@@ -233,11 +255,15 @@ class LRUCache(Cache):
 
         else:
 
-            ##  If empty not available, delete last slot, prime new slot.
-            cache, res_del = super().delete_data_from_ds(
-                cache,
-                len(cache) - 1
-            )
+            if lru_cache == True:
+
+                cache, res_del = self.rw_lru_cache(cache)
+
+            else:
+
+                ##  MRU cache sequence here
+
+                pass
             
         if res_del == True:
 
@@ -249,7 +275,7 @@ class LRUCache(Cache):
     # Look up an address. Uses caching if appropriate.
     def lookup(self, address):
 
-        hit, pos_hit = super().check_if_in_ds(self.cache, address)
+        hit, hit_pos = super().check_if_in_ds(self.cache, address)
 
         if hit == True:
 
@@ -257,7 +283,9 @@ class LRUCache(Cache):
             self.cache_hit_count += 1            
             self.cache_hit_flag = True
 
-            data = self.cache[pos_hit][address]
+            self.cache = self.update_xru_cache_hit(self.cache, address, hit_pos)
+
+            data = self.cache[hit_pos][address]
 
         else:
  
@@ -270,10 +298,11 @@ class LRUCache(Cache):
             if data is not None:
 
                 ##  Update cache.
-                self.cache = self.update_xru_cache(
+                self.cache = self.update_xru_cache_miss(
                     self.cache,
                     address,
-                    data
+                    data,
+                    True
                 )
 
         return data
