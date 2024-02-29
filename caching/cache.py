@@ -179,6 +179,9 @@ class CyclicCache(Cache):
 
     def lookup(self, address):
 
+        if len(self.cache) == 0:
+            return None
+
         hit, pos = super().check_if_in_ds(self.cache, address)
 
         if hit is True:
@@ -224,9 +227,8 @@ class LRUCache(Cache):
     def __init__(self, data, size=5):
         super().__init__(data)
         self.cache = super().generate_ds(size)
-        print("generated cache", data, size, self.cache)
+        # print("generated cache", data, size, self.cache)
 
-        
     def update_xru_cache_hit(self, cache, mem_addr, hit_pos):
 
         data = cache[hit_pos][mem_addr]
@@ -288,7 +290,8 @@ class LRUCache(Cache):
 
     def lookup(self, address):
 
-        print(self.cache)
+        if len(self.cache) == 0:
+            return None
 
         hit, hit_pos = super().check_if_in_ds(self.cache, address)
 
@@ -321,8 +324,6 @@ class LRUCache(Cache):
                     True
                 )
 
-        print(self.cache)
-
         return data
 
 
@@ -339,7 +340,7 @@ class MRUCache(Cache):
     def __init__(self, data, size=5):
         super().__init__(data)
         self.cache = super().generate_ds(size)
-        print("generated cache", data, size, self.cache)
+        # print("generated cache", data, size, self.cache)
 
     def update_xru_cache_hit(self, cache, mem_addr, hit_pos):
 
@@ -402,7 +403,8 @@ class MRUCache(Cache):
 
     def lookup(self, address):
 
-        print(self.cache)
+        if len(self.cache) == 0:
+            return None
 
         hit, hit_pos = super().check_if_in_ds(self.cache, address)
 
@@ -435,8 +437,6 @@ class MRUCache(Cache):
                     False
                 )
 
-        print(self.cache)
-
         return data
 
 
@@ -459,7 +459,7 @@ class LFUCache(Cache):
         super().__init__(data)
         self.cache = super().generate_ds(size)
         self.cache_hits = super().generate_ds(size)
-        print("generated cache", data, size, self.cache)
+        # print("generated cache", data, size, self.cache)
 
     def output_cache_hits(self):
 
@@ -494,6 +494,9 @@ class LFUCache(Cache):
 
     # Look up an address. Uses caching if appropriate.
     def lookup(self, address):
+
+        if len(self.cache) == 0:
+            return None
 
         hit, hit_pos = super().check_if_in_ds(self.cache, address)
 
