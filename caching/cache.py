@@ -155,7 +155,7 @@ class Cache():
 
             key = list(ds_dict.keys())[0]
 
-            if ds_dict[key] < smallest:
+            if ds_dict[key] <= smallest:
 
                 smallest_key = key
                 
