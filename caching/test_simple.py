@@ -159,6 +159,7 @@ class TestCaseMemoryHit(BasicTestCase):
         hits_2 = impl.get_memory_request_count()
         # If the cache is working, then the hit count should have
         # changed by the given amount
+
         self.assertEqual(hits_1+diff, hits_2, "Memory hit count incorrect")
 
     # Default_cache. Hit count should increase by 1
@@ -231,9 +232,14 @@ class TestCaseMultipleLookup(BasicTestCase):
     # Here we look up five items, then request the first one again.
     # Then check the hit counts.
     def caching_check(self, impl, diff):
-        # Warm up and fill the cache.
+
+            # Warm up and fill the cache.
         for loc in range(10, 20):
             impl.lookup(loc)
+            
+        if impl.name() == "LFU":
+            print(1, impl.output_cache_hits())
+        
 
         # Look up 5 items
         datum_1 = impl.lookup(1)
@@ -242,12 +248,22 @@ class TestCaseMultipleLookup(BasicTestCase):
         datum_4 = impl.lookup(4)
         datum_5 = impl.lookup(5)
         hits_1 = impl.get_memory_request_count()
+
+        if impl.name() == "LFU":
+            print(2, impl.output_cache_hits())
+
+
         datum_6 = impl.lookup(1)
         hits_2 = impl.get_memory_request_count()
         # Data should be the same
         self.assertEqual(datum_1, datum_6, "Lookup values don't match")
         # If the cache is working, then the hit count should have
         # changed by the given amount
+        print(impl.name(), hits_1+diff, hits_2)
+
+        if impl.name() == "LFU":
+            print(3, impl.output_cache_hits())
+        
         self.assertEqual(hits_1+diff, hits_2, "Memory hit count incorrect")
 
     # Default_cache. Hit count should increase by 1

@@ -461,9 +461,18 @@ class LFUCache(Cache):
         self.cache_hits = super().generate_ds(size)
 
         
+    def output_cache_hits(self):
+
+        ##  For debugging.
+
+        return self.cache_hits
+
+        
     def inc_cache_hits(self, cache_hits, hit_pos, mem_addr):
 
         cache_hits[hit_pos][mem_addr] += 1
+
+        print(cache_hits)
 
         return cache_hits
 
