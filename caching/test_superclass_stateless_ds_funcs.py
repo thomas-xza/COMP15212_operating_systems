@@ -117,7 +117,7 @@ class Test_stateless_methods(unittest.TestCase):
             )
 
 
-    def test_push_to_empty_ds(self):
+    def test_write_to_empty_ds(self):
         
         c_size = 10
         blah = Cache(data, c_size)
@@ -127,7 +127,7 @@ class Test_stateless_methods(unittest.TestCase):
 
         for x in range(c_size):
 
-            ds, pos = blah.push_to_ds(ds, pos, x, x)
+            ds, pos = blah.write_to_ds(ds, pos, x, x)
 
         self.assertEqual(
             ds,
@@ -150,7 +150,7 @@ class Test_stateless_methods(unittest.TestCase):
             )
 
 
-    def test_push_to_full_ds(self):
+    def test_write_to_full_ds(self):
         
         c_size = 10
         blah = Cache(data, c_size)
@@ -169,9 +169,9 @@ class Test_stateless_methods(unittest.TestCase):
 
         pos = 0
 
-        ds, pos = blah.push_to_ds(ds, pos, 100, 100)
-        ds, pos = blah.push_to_ds(ds, pos, 101, 101)
-        ds, pos = blah.push_to_ds(ds, pos, 102, 102)
+        ds, pos = blah.write_to_ds(ds, pos, 100, 100)
+        ds, pos = blah.write_to_ds(ds, pos, 101, 101)
+        ds, pos = blah.write_to_ds(ds, pos, 102, 102)
 
         self.assertEqual(
             ds,
