@@ -47,12 +47,12 @@ class Cache():
     ###  DO NOT TOUCH ABOVE LINES  ####
     ####################################
 
-    
+
     ########################################################
     #  GENERIC DATA STRUCTURE STATELESS FUNCTIONS BELOW  ##
     ########################################################
 
-    
+
     def generate_ds(self, size):
 
         new_ds = []
@@ -65,7 +65,7 @@ class Cache():
 
         return new_ds
 
-    
+
     def check_if_in_ds(self, ds, key):
 
         #  Searches though data-struct looking for given key.
@@ -92,7 +92,7 @@ class Cache():
         ds[0] = { key: data }
 
         return ds
-    
+
 
     def delete_data_from_ds(self, ds, key):
 
@@ -124,7 +124,7 @@ class Cache():
 
         return ds, res
 
-    
+
     def write_to_ds(self, ds, pos, key, data):
 
         #  Will hard overwrite data in data-struct at position given.
@@ -141,7 +141,7 @@ class Cache():
 
         return ds, next_pos
 
-    
+
     def find_smallest_ds_value(self, ds):
 
         #  Iterates through the data structure, returns key
@@ -158,7 +158,7 @@ class Cache():
             if ds_dict[key] <= smallest:
 
                 smallest_key = key
-                
+
                 smallest = ds_dict[key]
 
         return smallest_key
@@ -199,17 +199,17 @@ class CyclicCache(Cache):
             data = self.cache[pos][address]
 
         else:
- 
+
             #  Set cache miss data.
             self.cache_hit_flag = False
-            
+
             #  Access memory.
             data = super().lookup(address)
 
             if data is not None:
 
                 #  Store to cache (if found).
-                
+
                 self.cache, self.cache_ptr = super().write_to_ds(
                     self.cache,
                     self.cache_ptr,
@@ -234,11 +234,11 @@ class LRUCache(Cache):
         super().__init__(data)
         self.cache = super().generate_ds(size)
 
-        
+
     def update_xru_cache_hit(self, cache, mem_addr, hit_pos):
 
         data = cache[hit_pos][mem_addr]
-        
+
         cache, res_del = super().delete_data_from_ds(cache, mem_addr)
 
         if res_del is True:
@@ -261,8 +261,8 @@ class LRUCache(Cache):
         )
 
         return cache, res_del
-        
-    
+
+
     def update_xru_cache_miss(self, cache, mem_addr, data, lru_cache):
 
         #  Check for empty slot in cache.        
@@ -271,7 +271,7 @@ class LRUCache(Cache):
         res_del = False
 
         if empty_slot is True:
-            
+
             #  If empty available, delete it, prime new slot.
             cache, res_del = super().delete_data_from_ds(cache, -1)
 
@@ -286,7 +286,7 @@ class LRUCache(Cache):
                 #  MRU cache sequence here
 
                 pass
-            
+
         if res_del is True:
 
             cache = super().prepend_to_ds(cache, mem_addr, data)
@@ -312,10 +312,10 @@ class LRUCache(Cache):
             self.cache = self.update_xru_cache_hit(self.cache, address, hit_pos)
 
         else:
- 
+
             #  Set cache miss data.
             self.cache_hit_flag = False
-            
+
             #  Access memory.
             data = super().lookup(address)
 
@@ -348,11 +348,11 @@ class MRUCache(Cache):
         super().__init__(data)
         self.cache = super().generate_ds(size)
 
-        
+
     def update_xru_cache_hit(self, cache, mem_addr, hit_pos):
 
         data = cache[hit_pos][mem_addr]
-        
+
         cache, res_del = super().delete_data_from_ds(cache, mem_addr)
 
         if res_del is True:
@@ -375,8 +375,8 @@ class MRUCache(Cache):
         )
 
         return cache, res_del
-        
-    
+
+
     def update_xru_cache_miss(self, cache, mem_addr, data, lru_cache):
 
         #  Check for empty slot in cache.        
@@ -385,7 +385,7 @@ class MRUCache(Cache):
         res_del = False
 
         if empty_slot is True:
-            
+
             #  If empty available, delete it, prime new slot.
             cache, res_del = super().delete_data_from_ds(cache, -1)
 
@@ -400,7 +400,7 @@ class MRUCache(Cache):
                 #  LRU cache sequence omitted.
 
                 pass
-            
+
         if res_del is True:
 
             cache = super().prepend_to_ds(cache, mem_addr, data)
@@ -426,10 +426,10 @@ class MRUCache(Cache):
             self.cache = self.update_xru_cache_hit(self.cache, address, hit_pos)
 
         else:
- 
+
             #  Set cache miss data.
             self.cache_hit_flag = False
-            
+
             #  Access memory.
             data = super().lookup(address)
 
@@ -498,7 +498,7 @@ class LFUCache(Cache):
             cache_hits, mem_addr)
 
         return cache, cache_hits
-        
+
     # Look up an address. Uses caching if appropriate.
     def lookup(self, address):
 
@@ -515,7 +515,7 @@ class LFUCache(Cache):
             self.cache_hits = self.inc_cache_hits(self.cache_hits, hit_pos, address)
 
         else:
- 
+
             #  Set cache miss data.
             self.cache_hit_flag = False
 
