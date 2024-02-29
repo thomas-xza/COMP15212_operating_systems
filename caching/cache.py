@@ -322,6 +322,7 @@ class MRUCache(Cache):
         super().__init__(data)
         self.cache = super().generate_ds(size)
 
+        
     def update_xru_cache_hit(self, cache, mem_addr, hit_pos):
 
         data = cache[hit_pos][mem_addr]
