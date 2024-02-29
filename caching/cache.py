@@ -142,6 +142,28 @@ class Cache():
         return ds, next_pos
 
     
+    def find_smallest_ds_value(ds):
+
+        ##  Iterates through the data structure, returns key
+        ##    of dictionary with smallest value within it.
+
+        smallest_key = list(ds[0].keys())[0]
+
+        smallest = ds[smallest_key]
+
+        for ds_dict in ds:
+
+            key = list(ds_dict.keys())[0]
+
+            if ds_dict[key] < smallest:
+
+                smallest_key = key
+                
+                smallest = ds_dict[key]
+
+        return smallest_key
+
+
     ########################################################
     ##  GENERIC DATA STRUCTURE STATELESS FUNCTIONS ABOVE  ##
     ########################################################
@@ -232,7 +254,7 @@ class LRUCache(Cache):
             cache[-1].keys()
         )[0]
 
-        ##  If empty not available, delete last key, prime new slot.
+        ##  As empty not available, delete last key, prime new slot.
         cache, res_del = super().delete_data_from_ds(
             cache,
             last_key
@@ -342,7 +364,7 @@ class MRUCache(Cache):
             cache[0].keys()
         )[0]
 
-        ##  If empty not available, delete first key, prime new slot.
+        ##  As empty not available, delete first key, prime new slot.
         cache, res_del = super().delete_data_from_ds(
             cache,
             first_key
@@ -436,7 +458,65 @@ class LFUCache(Cache):
     def __init__(self, data, size=5):
         super().__init__(data)
         self.cache = super().generate_ds(size)
+        self.cache_hits = super().generate_ds(size)
 
+        
+    def inc_cache_hit(cache_hits, hit_pos, mem_addr):
+
+        return cache_hits[hit_pos][mem_addr] += 1
+
+
+    def handle_cache_miss(cache, cache_hits, mem_addr):
+
+        hit, hit_pos = super().check_if_in_ds(self.cache, -1)
+
+        if hit == True:
+
+            mem_addr = -1
+
+        else:
+
+            mem_addr = find_smallest_ds_value(cache_hits)
+
+        cache = super().delete_data_from_ds(cache, mem_addr)
+        cache_hits = super().delete_data_from_ds(cache_hits, mem_addr)
+
+        return cache, cache_hits
+    
+    
     # Look up an address. Uses caching if appropriate.
     def lookup(self, address):
-        return None
+
+        hit, hit_pos = super().check_if_in_ds(self.cache, address)
+
+        if hit == True:
+
+            ##  Set cache hit data.
+            self.cache_hit_flag = True
+            self.cache_hit_count += 1            
+
+            data = self.cache[hit_pos][address]
+
+            self.cache_hits = self.inc_cache_hits(self.cache_hits, hit_pos, address)
+
+        else:
+ 
+            ##  Set cache miss data.
+            self.cache_hit_flag = False
+            
+            ##  Access memory.
+            data = super().lookup(address)
+
+            if data is not None:
+
+                self.cache, self.cache_hits = handle_cache_miss(
+                    self.cache,
+                    self.cache_hits,
+                    address
+                )
+
+                self.cache = super().prepend_to_ds(cache, address, data)
+                self.cache_hits = super().prepend_to_ds(cache_hits, address, 0)
+                
+        return data
+        

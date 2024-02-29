@@ -101,20 +101,6 @@ find_lowest_access_quantity(
   
 remove_from_ds()
 
-remove_from_ds_hits(
-  ds_hits list[int], pos int
-  )
-  -> (  
-  ds_hits list[int]
-  )
-
 prepend_to_ds()
-
-prepend_to_ds_hits(
-  ds_hits list[int], pos int
-  )
-  -> (  
-  ds_hits list[int]
-  )
 
 -----
