@@ -280,12 +280,12 @@ class LRUCache(Cache):
         if hit == True:
 
             ##  Set cache hit data.
-            self.cache_hit_count += 1            
             self.cache_hit_flag = True
-
-            self.cache = self.update_xru_cache_hit(self.cache, address, hit_pos)
+            self.cache_hit_count += 1            
 
             data = self.cache[hit_pos][address]
+
+            self.cache = self.update_xru_cache_hit(self.cache, address, hit_pos)
 
         else:
  
