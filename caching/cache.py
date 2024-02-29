@@ -322,9 +322,99 @@ class MRUCache(Cache):
         super().__init__(data)
         self.cache = super().generate_ds(size)
 
+    def update_xru_cache_hit(self, cache, mem_addr, hit_pos):
+
+        data = cache[hit_pos][mem_addr]
+        
+        cache, res_del = super().delete_data_from_ds(cache, mem_addr)
+
+        if res_del == True:
+
+            cache = super().prepend_to_ds(cache, mem_addr, data)
+
+        return cache
+
+
+    def rw_mru_cache(self, cache):
+
+        first_key = list(
+            cache[0].keys()
+        )[0]
+
+        ##  If empty not available, delete first key, prime new slot.
+        cache, res_del = super().delete_data_from_ds(
+            cache,
+            first_key
+        )
+
+        return cache, res_del
+        
+    
+    def update_xru_cache_miss(self, cache, mem_addr, data, lru_cache):
+
+        ##  Check for empty slot in cache.        
+        empty_slot, _ = super().check_if_in_ds(cache, -1)
+
+        res_del = False
+
+        if empty_slot == True:
+            
+            ##  If empty available, delete it, prime new slot.
+            cache, res_del = super().delete_data_from_ds(cache, -1)
+
+        else:
+
+            if lru_cache == False:
+
+                cache, res_del = self.rw_mru_cache(cache)
+
+            else:
+
+                ##  LRU cache sequence omitted.
+
+                pass
+            
+        if res_del == True:
+
+            cache = super().prepend_to_ds(cache, mem_addr, data)
+
+        return cache
+
+
     # Look up an address. Uses caching if appropriate.
     def lookup(self, address):
-        return None
+
+        hit, hit_pos = super().check_if_in_ds(self.cache, address)
+
+        if hit == True:
+
+            ##  Set cache hit data.
+            self.cache_hit_flag = True
+            self.cache_hit_count += 1            
+
+            data = self.cache[hit_pos][address]
+
+            self.cache = self.update_xru_cache_hit(self.cache, address, hit_pos)
+
+        else:
+ 
+            ##  Set cache miss data.
+            self.cache_hit_flag = False
+            
+            ##  Access memory.
+            data = super().lookup(address)
+
+            if data is not None:
+
+                ##  Update cache.
+                self.cache = self.update_xru_cache_miss(
+                    self.cache,
+                    address,
+                    data,
+                    False
+                )
+
+        return data
 
 
 class LFUCache(Cache):
