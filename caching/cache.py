@@ -479,12 +479,6 @@ class LFUCache(Cache):
 
         return self.cache_hits
 
-    def inc_cache_hits(self, cache_hits, hit_pos, mem_addr):
-
-        cache_hits[hit_pos][mem_addr] += 1
-
-        return cache_hits
-
     def handle_cache_miss(self, cache, cache_hits, mem_addr):
 
         #  Check for empty cache slot.
@@ -520,7 +514,7 @@ class LFUCache(Cache):
         
         data = self.cache[data_pos][mem_addr]
 
-        hits = self.cache_hits[hits_pos][mem_addr]
+        hits = self.cache_hits[hits_pos][mem_addr] + 1
 
         #  Delete data from data and hit stores (priming for next step).
 
