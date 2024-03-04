@@ -520,7 +520,7 @@ class LFUCache(Cache):
         _, data_pos = super().check_if_in_ds(self.cache, mem_addr)
 
         _, hits_pos = super().check_if_in_ds(self.cache_hits, mem_addr)
-
+        
         data = self.cache[data_pos][mem_addr]
 
         hits = self.cache_hits[hits_pos][mem_addr] + 1
@@ -528,13 +528,13 @@ class LFUCache(Cache):
         #  Delete data from data and hit stores (priming for next step).
 
         cache, _ = super().delete_data_from_ds(
-            cache, mem_addr)
+            cache, mem_addr)        
         cache_hits, _ = super().delete_data_from_ds(
             cache_hits, mem_addr)
 
         #  Prepend to top of data and hit stores (for the LRU fallback).
-
-        cache = super().prepend_to_ds(cache, mem_addr, data)
+        
+        cache = super().prepend_to_ds(cache, mem_addr, data)            
         cache_hits = super().prepend_to_ds(cache_hits, mem_addr, hits)
 
         return cache, cache_hits, data
