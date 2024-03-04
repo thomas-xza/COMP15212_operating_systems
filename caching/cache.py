@@ -298,7 +298,7 @@ class LRUCache(Cache):
 
             data = super().lookup(address)
 
-            print(data)
+            # print(data)
 
             return data
 
@@ -487,13 +487,19 @@ class LFUCache(Cache):
 
     def handle_cache_miss(self, cache, cache_hits, mem_addr):
 
+        #  Check for empty cache slot.
+
         hit, hit_pos = super().check_if_in_ds(self.cache, -1)
 
         if hit is True:
 
+            #  If empty slot exists, target this.
+
             mem_addr = -1
 
         else:
+
+            #  Else target least-frequently-used slot.
 
             mem_addr = super().find_smallest_ds_value(self.cache_hits)
 
@@ -504,6 +510,32 @@ class LFUCache(Cache):
 
         return cache, cache_hits
 
+    def handle_cache_hit(self, cache, cache_hits, mem_addr):
+
+        #  Find data definitely in cache (checked by caller function).
+
+        _, data_pos = super().check_if_in_ds(self.cache, mem_addr)
+
+        _, hits_pos = super().check_if_in_ds(self.cache_hits, mem_addr)
+        
+        data = self.cache[data_pos][mem_addr]
+
+        hits = self.cache_hits[hits_pos][mem_addr]
+
+        #  Delete data from data and hit stores (priming for next step).
+
+        cache, _ = super().delete_data_from_ds(
+            cache, mem_addr)        
+        cache_hits, _ = super().delete_data_from_ds(
+            cache_hits, mem_addr)
+
+        #  Prepend to top of data and hit stores (for the LRU fallback).
+        
+        cache = super().prepend_to_ds(cache, mem_addr, data)            
+        cache_hits = super().prepend_to_ds(cache_hits, mem_addr, hits)
+
+        return cache, cache_hits, data
+
     # Look up an address. Uses caching if appropriate.
     def lookup(self, address):
 
@@ -513,7 +545,7 @@ class LFUCache(Cache):
 
             return data
 
-        hit, hit_pos = super().check_if_in_ds(self.cache, address)
+        hit, _ = super().check_if_in_ds(self.cache, address)
 
         if hit is True:
 
@@ -521,10 +553,10 @@ class LFUCache(Cache):
             self.cache_hit_flag = True
             self.cache_hit_count += 1
 
-            data = self.cache[hit_pos][address]
-
-            self.cache_hits = self.inc_cache_hits(
-                self.cache_hits, hit_pos, address)
+            self.cache, self.cache_hits, data = self.handle_cache_hit(
+                self.cache,
+                self.cache_hits,
+                address)
 
         else:
 
