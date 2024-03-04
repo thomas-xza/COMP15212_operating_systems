@@ -139,13 +139,22 @@ class Cache():
         #  Iterates through the data structure, returns key
         #    of dictionary with smallest value within it.
 
+        #  Set initial target to first values in data-struct.
+
         smallest_key = list(ds[0].keys())[0]
 
         smallest = ds[0][smallest_key]
 
+        #  Iterate through the elements within the data struct.
+
         for ds_dict in ds:
 
+            #  Select the key of the current dict element.
+
             key = list(ds_dict.keys())[0]
+
+            #  If the value related to the key is smaller or equal to
+            #  last value checked, save key and value.
 
             if ds_dict[key] <= smallest:
 
