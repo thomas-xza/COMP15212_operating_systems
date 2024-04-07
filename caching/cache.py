@@ -184,6 +184,14 @@ class CyclicCache(Cache):
         self.cache = super().generate_ds(size)
         self.cache_ptr = 0
 
+    def output_cache(self):
+
+        return self.cache
+
+    def output_cache_ptr(self):
+
+        return self.cache_ptr
+
     # Look up an address. Uses caching if appropriate.
 
     def lookup(self, address):
