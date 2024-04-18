@@ -28,7 +28,7 @@ class Test_LFU_cache(unittest.TestCase):
         # print("Should get deleted next: ", lfu.output_cache_hits()[-1])
 
         lfu.lookup(5)
-        
+
         self.assertEqual(
             lfu.get_cache_hit_flag(),
             False
@@ -200,7 +200,7 @@ class Test_LFU_cache(unittest.TestCase):
               {4: 2}, {3: 2}, {2: 2}, {1: 2} ]
             )
         
-
+        
 if __name__ == '__main__':
     unittest.main()
 

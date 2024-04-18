@@ -250,6 +250,10 @@ class LRUCache(Cache):
         self.cache = super().generate_ds(size)
         # print("generated cache", self.cache)
 
+    def output_cache(self):
+
+        return self.cache
+
     def update_xru_cache_hit(self, cache, mem_addr, hit_pos):
 
         data = cache[hit_pos][mem_addr]
@@ -367,6 +371,10 @@ class MRUCache(Cache):
         super().__init__(data)
         self.cache = super().generate_ds(size)
         # print("generated cache", data, size, self.cache)
+
+    def output_cache(self):
+
+        return self.cache
 
     def update_xru_cache_hit(self, cache, mem_addr, hit_pos):
 
